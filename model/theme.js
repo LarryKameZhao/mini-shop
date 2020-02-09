@@ -26,11 +26,10 @@ class Theme {
   static getHomeLocationESpu() {
     return Theme.getThemeSpuByName(Theme.locationE);
   }
-  static async getThemeSpuByName(name) {
-    const theme = await Http.request({
+  static getThemeSpuByName(name) {
+    return Http.request({
       url: `theme/name/${name}/with_spu`
     });
-    return theme;
   }
 }
 export { Theme };
