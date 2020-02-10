@@ -15,13 +15,17 @@ class Theme {
       }
     });
   }
-  async getHomeLocationA() {
+  getHomeLocationA() {
     const themeA = this.themes.find(item => item.name === Theme.locationA);
     return themeA;
   }
-  async getHomeLocationE() {
+  getHomeLocationE() {
     const themeE = this.themes.find(item => item.name === Theme.locationE);
     return themeE;
+  }
+  getHomeLocationF() {
+    const themeF = this.themes.find(item => item.name === Theme.locationF);
+    return themeF;
   }
   static getHomeLocationESpu() {
     return Theme.getThemeSpuByName(Theme.locationE);
