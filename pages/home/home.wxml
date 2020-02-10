@@ -13,4 +13,7 @@
   <image src="{{themeF.entrance_img}}" class="quality" />
   <s-hot-list banner="{{bannerG}}" />
   <image src="{{themeH.entrance_img}}" class="fashion" />
+  <view class="spu-bottom">
+    <image class="title-spu-bottom" src="/imgs/home/title@interest.png" />
+  </view>
 </view>
