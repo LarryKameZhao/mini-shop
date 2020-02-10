@@ -12,4 +12,5 @@
   <s-spu-scroll wx:if="{{themeE.online}}" theme="{{themeE}}" spu-list="{{themeESpu}}"></s-spu-scroll>
   <image src="{{themeF.entrance_img}}" class="quality" />
   <s-hot-list banner="{{bannerG}}" />
+  <image src="{{themeH.entrance_img}}" class="fashion" />
 </view>

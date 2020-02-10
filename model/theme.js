@@ -27,6 +27,10 @@ class Theme {
     const themeF = this.themes.find(item => item.name === Theme.locationF);
     return themeF;
   }
+  getHomeLocationH() {
+    const themeH = this.themes.find(item => item.name === Theme.locationH);
+    return themeH;
+  }
   static getHomeLocationESpu() {
     return Theme.getThemeSpuByName(Theme.locationE);
   }
