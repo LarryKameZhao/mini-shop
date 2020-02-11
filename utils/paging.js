@@ -1,0 +1,79 @@
+class Paging {
+  start;
+  count;
+  req;
+  lokcer = false;
+  url;
+  moreData;
+  accumulator = [];
+  constructor(req, count = 10, start) {
+    this.start = start;
+    this.count = count;
+    this.req = req;
+    this.url = req.url;
+  }
+  async getMoreData() {
+    if (!this.moreData) {
+      return;
+    }
+    if (!this._getLocker()) {
+      return;
+    }
+    const data = await this._actualGetData();
+    this._releaseLocker();
+    return data;
+  }
+  async _actualGetData() {
+    const req = this._getCurrentReq();
+    let paging = await Http.request(req);
+    if (!paging) {
+      return null;
+    }
+    if (paging.total === 0) {
+      return {
+        empty: true,
+        items: [],
+        moreData: false,
+        accumulator: []
+      };
+    }
+    this.moreData = Paging._moreData(paging.total_page, paging.page);
+    if (this.moreData) {
+      this.start += this.count;
+    }
+    this._accumulator(paging.items);
+    return {
+      empty: false,
+      items: paging.items,
+      moreData: this.moreData,
+      accumulator: this.accumulator
+    };
+  }
+  _accumulator(items) {
+    this.accumulator = this.accumulator.concat(items);
+  }
+  static _moreData(totalPage, pageNum) {
+    return pageNum < totalPage - 1;
+  }
+  _getCurrentReq() {
+    let url = this.url;
+    const params = `start=${this.start}&count=${this.count}`;
+    if (url.indexOf("?") !== -1) {
+      url += "&" + params;
+    } else {
+      url += "?" + params;
+    }
+  }
+  _getLocker() {
+    if (this.locker) {
+      return false;
+    }
+    this.locker = true;
+    return;
+  }
+  _releaseLocker() {
+    this.locker = false;
+  }
+}
+
+export { Paging };

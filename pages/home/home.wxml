@@ -15,5 +15,6 @@
   <image src="{{themeH.entrance_img}}" class="fashion" />
   <view class="spu-bottom">
     <image class="title-spu-bottom" src="/imgs/home/title@interest.png" />
+    <l-water-flow generic:l-water-flow-item=""></l-water-flow>
   </view>
 </view>

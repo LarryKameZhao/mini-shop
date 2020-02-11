@@ -3,6 +3,7 @@ import { Theme } from "../../model/theme.js";
 import { Banner } from "../../model/banner.js";
 import { Category } from "../../model/category.js";
 import { Activity } from "../../model/activity.js";
+import { SpuPaging } from "../../model/spu.js";
 
 Page({
   /**
@@ -25,6 +26,13 @@ Page({
    */
   onLoad: async function(options) {
     this.initAllData();
+  },
+  async initBottomSpuList() {
+    const paging = await SpuPaging.getLatestPaging();
+    const data = paging.getMoreData();
+    if (!data) {
+      return;
+    }
   },
   async initAllData() {
     const theme = new Theme();
