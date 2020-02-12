@@ -1,20 +1,22 @@
-<view>
-  <image class="top-theme" src="{{themeA.entrance_img}}" />
-  <swiper class="swiper" indicator-dots="{{true}}" indicator-active-color="#157658" autoplay circular="{{true}}">
-    <block wx:for="{{bannerB.items}}">
-      <swiper-item>
-        <image class="swiper" src="{{item.img}}" />
-      </swiper-item>
-    </block>
-  </swiper>
-  <s-category-grid grid="{{grid}}"></s-category-grid>
-  <image class="activity" src="{{activityD.entrance_img}}" />
-  <s-spu-scroll wx:if="{{themeE.online}}" theme="{{themeE}}" spu-list="{{themeESpu}}"></s-spu-scroll>
-  <image src="{{themeF.entrance_img}}" class="quality" />
-  <s-hot-list banner="{{bannerG}}" />
-  <image src="{{themeH.entrance_img}}" class="fashion" />
-  <view class="spu-bottom">
-    <image class="title-spu-bottom" src="/imgs/home/title@interest.png" />
-    <l-water-flow generic:l-water-flow-item=""></l-water-flow>
+<l-loadmore show>
+  <view slot="content" class="container">
+    <image class="top-theme" src="{{themeA.entrance_img}}" />
+    <swiper class="swiper" indicator-dots="{{true}}" indicator-active-color="#157658" autoplay circular="{{true}}">
+      <block wx:for="{{bannerB.items}}">
+        <swiper-item>
+          <image class="swiper" src="{{item.img}}" />
+        </swiper-item>
+      </block>
+    </swiper>
+    <s-category-grid grid="{{grid}}"></s-category-grid>
+    <image class="activity" src="{{activityD.entrance_img}}" />
+    <s-spu-scroll wx:if="{{themeE.online}}" theme="{{themeE}}" spu-list="{{themeESpu}}"></s-spu-scroll>
+    <image src="{{themeF.entrance_img}}" class="quality" />
+    <s-hot-list banner="{{bannerG}}" />
+    <image src="{{themeH.entrance_img}}" class="fashion" />
+    <view class="spu-bottom">
+      <image class="title-spu-bottom" src="/imgs/home/title@interest.png" />
+      <l-water-flow generic:l-water-flow-item="s-spu-preview"></l-water-flow>
+    </view>
   </view>
-</view>
+</l-loadmore>

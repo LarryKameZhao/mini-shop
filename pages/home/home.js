@@ -18,7 +18,8 @@ Page({
     bannerG: null,
     themeH: null,
     grid: [],
-    activityD: null
+    activityD: null,
+    spuPaging: null
   },
 
   /**
@@ -26,13 +27,16 @@ Page({
    */
   onLoad: async function(options) {
     this.initAllData();
+    this.initBottomSpuList();
   },
   async initBottomSpuList() {
     const paging = await SpuPaging.getLatestPaging();
-    const data = paging.getMoreData();
+    this.data.spuPaging = paging;
+    const data = await paging.getMoreData();
     if (!data) {
       return;
     }
+    wx.lin.renderWaterFlow(data.items);
   },
   async initAllData() {
     const theme = new Theme();
@@ -64,6 +68,14 @@ Page({
       activityD
     });
   },
+  onReachBottom: async function() {
+    console.log("reach bottom");
+    const data = await this.data.spuPaging.getMoreData();
+    if (!data) {
+      return;
+    }
+    wx.lin.renderWaterFlow(data.items);
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -92,7 +104,6 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
 
   /**
    * 用户点击右上角分享

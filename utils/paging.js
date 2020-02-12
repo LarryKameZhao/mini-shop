@@ -1,24 +1,29 @@
+import { Http } from "./http";
+
 class Paging {
   start;
   count;
   req;
   lokcer = false;
   url;
-  moreData;
+  moreData = true;
   accumulator = [];
-  constructor(req, count = 10, start) {
+  constructor(req, count = 10, start = 0) {
     this.start = start;
     this.count = count;
     this.req = req;
     this.url = req.url;
   }
   async getMoreData() {
+    console.log(1);
     if (!this.moreData) {
       return;
     }
+    console.log(2);
     if (!this._getLocker()) {
       return;
     }
+    console.log(3);
     const data = await this._actualGetData();
     this._releaseLocker();
     return data;
@@ -58,18 +63,21 @@ class Paging {
   _getCurrentReq() {
     let url = this.url;
     const params = `start=${this.start}&count=${this.count}`;
-    if (url.indexOf("?") !== -1) {
+    if (url.includes("?")) {
       url += "&" + params;
+      // contains
     } else {
       url += "?" + params;
     }
+    this.req.url = url;
+    return this.req;
   }
   _getLocker() {
     if (this.locker) {
       return false;
     }
     this.locker = true;
-    return;
+    return true;
   }
   _releaseLocker() {
     this.locker = false;
