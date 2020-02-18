@@ -15,15 +15,12 @@ class Paging {
     this.url = req.url;
   }
   async getMoreData() {
-    console.log(1);
     if (!this.moreData) {
       return;
     }
-    console.log(2);
     if (!this._getLocker()) {
       return;
     }
-    console.log(3);
     const data = await this._actualGetData();
     this._releaseLocker();
     return data;

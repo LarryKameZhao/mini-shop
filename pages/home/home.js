@@ -3,7 +3,7 @@ import { Theme } from "../../model/theme.js";
 import { Banner } from "../../model/banner.js";
 import { Category } from "../../model/category.js";
 import { Activity } from "../../model/activity.js";
-import { SpuPaging } from "../../model/spu.js";
+import { SpuPaging } from "../../model/spu-paging.js";
 
 Page({
   /**
@@ -19,7 +19,8 @@ Page({
     themeH: null,
     grid: [],
     activityD: null,
-    spuPaging: null
+    spuPaging: null,
+    loadingType: null
   },
 
   /**
@@ -75,6 +76,11 @@ Page({
       return;
     }
     wx.lin.renderWaterFlow(data.items);
+    if (!data.moreData) {
+      this.setData({
+        loadingType: "end"
+      });
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

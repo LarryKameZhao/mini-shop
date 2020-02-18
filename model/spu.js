@@ -1,14 +1,9 @@
 import { Http } from "../utils/http";
-import { Paging } from "../utils/paging";
-class SpuPaging {
-  static getLatestPaging() {
-    return new Paging(
-      {
-        url: `spu/latest`
-      },
-      3
-    );
+class Spu {
+  static async getDetail(id) {
+    return Http.request({
+      url: `spu/id/${id}/detail`
+    });
   }
 }
-
-export { SpuPaging };
+export { Spu };
