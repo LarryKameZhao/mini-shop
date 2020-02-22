@@ -13,7 +13,8 @@ Component({
    * 组件的初始数据
    */
   data: {
-    fences: null
+    fences: null,
+    judger: Object
   },
   lifetimes: {
     attached() {}
@@ -25,7 +26,9 @@ Component({
       }
       const fencesGroup = new FenceGroup(spu);
       fencesGroup.initFences();
-      const judger = new Judger(fencesGroup);
+      this.setData({
+        judger: new Judger(fencesGroup)
+      });
       this.bindInitData(fencesGroup);
     }
   },
@@ -36,6 +39,17 @@ Component({
     bindInitData(fenceGroup) {
       this.setData({
         fences: fenceGroup.fences
+      });
+    },
+    onCellTap(event) {
+      console.log(event);
+      const cell = event.detail.cell;
+      const x = event.detail.x;
+      const y = event.detail.y;
+      const judger = this.data.judger;
+      judger.judge(cell, x, y);
+      this.setData({
+        fences: judger.fenceGroup.fences
       });
     }
   }
