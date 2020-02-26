@@ -9,6 +9,28 @@ class FenceGroup {
     this.spu = spu;
     this.skuList = spu.sku_list;
   }
+  getDefaultSku() {
+    const defaultSkuId = this.spu.default_sku_id;
+    if (!defaultSkuId) {
+      return;
+    }
+    return this.skuList.find(s => s.id === defaultSkuId);
+  }
+  getSku(skuCode) {
+    const fullSkuCode = this.spu.id + "$" + skuCode;
+    const sku = this.spu.sku_list.find(s => s.code === fullSkuCode);
+    return sku ? sku : null;
+  }
+  setCellStatusById(cellId, status) {
+    this.eachCell(cell => {
+      if (cell.id === cellId) {
+        cell.status = status;
+      }
+    });
+  }
+  setCellStatusByXY(x, y, status) {
+    this.fences[x].cells[y].status = status;
+  }
   _initFences() {
     const matrix = this._createMatrix(this.skuList);
     const fences = [];
