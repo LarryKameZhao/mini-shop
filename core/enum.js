@@ -3,5 +3,8 @@ const CellStatus = {
   SELECTED: "selected",
   WAITING: "waiting"
 };
-
-export { CellStatus };
+const ShoppingWay = {
+  CART: "cart",
+  BUY: "bug"
+};
+export { CellStatus, ShoppingWay };

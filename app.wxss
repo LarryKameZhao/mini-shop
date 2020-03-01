@@ -11,3 +11,20 @@
 page {
   background-color: #f5f5f5;
 }
+@font-face {
+  font-family: "iconfont"; /* project id 1663648 */
+  src: url("//at.alicdn.com/t/font_1663648_bmi3gxg257t.eot");
+  src: url("//at.alicdn.com/t/font_1663648_bmi3gxg257t.eot?#iefix")
+      format("embedded-opentype"),
+    url("//at.alicdn.com/t/font_1663648_bmi3gxg257t.woff2") format("woff2"),
+    url("//at.alicdn.com/t/font_1663648_bmi3gxg257t.woff") format("woff"),
+    url("//at.alicdn.com/t/font_1663648_bmi3gxg257t.ttf") format("truetype"),
+    url("//at.alicdn.com/t/font_1663648_bmi3gxg257t.svg#iconfont") format("svg");
+}
+.sleeve {
+  font-family: iconfont !important;
+  color: #157658 !important;
+}
+.l-icon-home:before {
+  content: "\e65b";
+}

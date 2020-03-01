@@ -52,11 +52,20 @@ class FenceGroup {
     AT.forEach(r => {
       const fence = new Fence(r);
       fence.init();
+      if (this._hasSketchFence() && this._isSketchFence(fence.id)) {
+        fence.setFenceSketch(this.skuList);
+      }
       fences.push(fence);
     });
     console.log("transpose");
-    console.log(fences);
     this.fences = fences;
+    console.log(fences);
+  }
+  _hasSketchFence() {
+    return this.spu.sketch_spec_id ? true : false;
+  }
+  _isSketchFence(fenceId) {
+    return this.spu.sketch_spec_id === fenceId ? true : false;
   }
   _createFence(element) {
     const fence = new Fence();

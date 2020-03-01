@@ -1,1 +1,16 @@
-<s-realm spu="{{spu}}"></s-realm>
+<view>
+  <swiper class="top" autoplay indicator-dots>
+    <block wx:for="{{spu.spu_img_list}}">
+      <swiper-item>
+        <image class="top" mode="aspectFill" src="{{item.img}}" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <s-spu-description spu="{{spu}}"></s-spu-description>
+</view>
+<l-popup content-align="bottom" show="{{showRealm}}">
+  <s-realm order-way="{{orderWay}}" spu="{{spu}}"></s-realm>
+</l-popup>
+<s-tabbar class="tabbar" bind:gotohome="onGotoHome" bind:gotocart="onGotoCart" bind:addtocart="onAddToCart" bind:buy="onBuy">
+  >
+</s-tabbar>

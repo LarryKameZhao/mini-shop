@@ -9,7 +9,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    spu: Object
+    spu: Object,
+    orderWay: String
   },
 
   /**
@@ -48,6 +49,7 @@ Component({
         noSpec: true
       });
       this.bindSkuData(spu.sku_list[0]);
+      this.setStockStatus(spu.sku_list[0].stock, this.data.currentSkuCount);
     },
     processHasSpec(spu) {
       const fencesGroup = new FenceGroup(spu);

@@ -5,6 +5,7 @@ class Fence {
   specs;
   title;
   id;
+  skuImg;
   constructor(specs) {
     this.specs = specs;
     this.title = specs[0].key;
@@ -26,6 +27,18 @@ class Fence {
     });
     console.log("----cell---");
     console.log(this.cells);
+  }
+  setFenceSketch(skuList) {
+    this.cells.forEach(c => {
+      this._setCellSkuImg(c, skuList);
+    });
+  }
+  _setCellSkuImg(cell, skuList) {
+    const specCode = cell.getCellCode();
+    const matchedSku = skuList.find(s => s.code.includes(specCode));
+    if (matchedSku) {
+      cell.skuImg = matchedSku.img;
+    }
   }
 }
 
