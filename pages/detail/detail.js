@@ -1,5 +1,7 @@
 import { Spu } from "../../model/spu";
 import { ShoppingWay } from "../../core/enum";
+import { SaleExplain } from "../../model/sale-explain";
+import { getWidowHeightRpx } from "../../utils/system";
 
 // pages/detail/detail.js
 Page({
@@ -8,7 +10,8 @@ Page({
    */
   data: {
     spu: null,
-    showRealm: false
+    showRealm: false,
+    specs: null
   },
 
   /**
@@ -17,8 +20,13 @@ Page({
   onLoad: async function(options) {
     const pid = options.pid;
     const spu = await Spu.getDetail(pid);
+    const explain = await SaleExplain.getFixed();
+    const windowHeight = await getWidowHeightRpx();
+    const h = windowHeight - 100;
     this.setData({
-      spu
+      spu,
+      explain,
+      h
     });
   },
   onAddToCart(event) {
@@ -41,6 +49,11 @@ Page({
   onGotoCart(event) {
     wx.switchTab({
       url: "/pages/cart/cart"
+    });
+  },
+  onSpecChange(event) {
+    this.setData({
+      specs: event.detail
     });
   },
   /**
