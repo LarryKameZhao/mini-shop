@@ -1,8 +1,8 @@
-import { FenceGroup } from "../models/fence-group";
-import { Judger } from "../models/judger";
-import { Spu } from "../../model/spu";
-import { Cell } from "../models/cell";
-import { Cart } from "../models/cart";
+import { FenceGroup } from '../models/fence-group';
+import { Judger } from '../models/judger';
+import { Spu } from '../../model/spu';
+import { Cell } from '../models/cell';
+import { Cart } from '../models/cart';
 // components/realm/index.js
 Component({
   /**
@@ -10,7 +10,7 @@ Component({
    */
   properties: {
     spu: Object,
-    orderWay: String
+    orderWay: String,
   },
 
   /**
@@ -23,13 +23,13 @@ Component({
     price: null,
     discountPrice: null,
     noSpec: false,
-    currentSkuCount: Cart.SKU_MIN_COUNT
+    currentSkuCount: Cart.SKU_MIN_COUNT,
   },
   lifetimes: {
-    attached() {}
+    attached() {},
   },
   observers: {
-    spu: function(spu) {
+    spu: function (spu) {
       if (!spu) {
         return;
       }
@@ -39,7 +39,7 @@ Component({
         this.processHasSpec(spu);
       }
       this.triggerSpecEvent();
-    }
+    },
   },
   /**
    * 组件的方法列表
@@ -47,7 +47,7 @@ Component({
   methods: {
     processNoSpec(spu) {
       this.setData({
-        noSpec: true
+        noSpec: true,
       });
       this.bindSkuData(spu.sku_list[0]);
       this.setStockStatus(spu.sku_list[0].stock, this.data.currentSkuCount);
@@ -56,7 +56,7 @@ Component({
       const fencesGroup = new FenceGroup(spu);
       fencesGroup.initFences();
       this.setData({
-        judger: new Judger(fencesGroup)
+        judger: new Judger(fencesGroup),
       });
       const defaultSku = fencesGroup.getDefaultSku();
       if (defaultSku) {
@@ -71,15 +71,15 @@ Component({
     triggerSpecEvent() {
       const noSpec = Spu.isNoSpec(this.properties.spu);
       if (noSpec) {
-        this.triggerEvent("specchange", {
-          noSpec
+        this.triggerEvent('specchange', {
+          noSpec,
         });
       } else {
-        this.triggerEvent("specchange", {
+        this.triggerEvent('specchange', {
           noSpec: Spu.isNoSpec(this.properties.spu),
           skuIntact: this.data.judger.isSkuIntact(),
           currentValues: this.data.judger.getCurrentValues(),
-          missingKeys: this.data.judger.getMissingKeys()
+          missingKeys: this.data.judger.getMissingKeys(),
         });
       }
     },
@@ -89,7 +89,7 @@ Component({
         previewImg: spu.img,
         title: spu.title,
         price: spu.price,
-        discountPrice: spu.discount_price
+        discountPrice: spu.discount_price,
       });
     },
     bindSkuData(sku) {
@@ -98,19 +98,19 @@ Component({
         title: sku.title,
         price: sku.price,
         discountPrice: sku.discount_price,
-        stock: sku.stock
+        stock: sku.stock,
       });
     },
     bindTipData() {
       this.setData({
         skuIntact: this.data.judger.isSkuIntact(),
         currentValues: this.data.judger.getCurrentValues(),
-        missingKeys: this.data.judger.getMissingKeys()
+        missingKeys: this.data.judger.getMissingKeys(),
       });
     },
     bindFenceGroupData(fenceGroup) {
       this.setData({
-        fences: fenceGroup.fences
+        fences: fenceGroup.fences,
       });
     },
     isOutOfStock(stock, currentCount) {
@@ -118,7 +118,7 @@ Component({
     },
     setStockStatus(stock, currentCount) {
       this.setData({
-        outStock: this.isOutOfStock(stock, currentCount)
+        outStock: this.isOutOfStock(stock, currentCount),
       });
     },
     onSelectCount(event) {
@@ -146,6 +146,40 @@ Component({
       this.bindTipData();
       this.bindFenceGroupData(judger.fenceGroup);
       this.triggerSpecEvent();
-    }
-  }
+    },
+    onByOrCart(event) {
+      if (Spu.isNoSpec(this.properties.spu)) {
+        this.shoppingNoSpec();
+      } else {
+        this.shoppingVarious();
+      }
+    },
+    shoppingVarious() {
+      const intact = this.data.judger.isSkuIntact();
+      if (!intact) {
+        const missKeys = this.data.judger.getMissingKeys();
+        wx.showToast({
+          icon: 'none',
+          title: `请选择: ${missKeys.join(',')}`,
+          duration: 2000,
+        });
+        return;
+      }
+      this._triggerShoppingEvent(this.data.judger.getDeterminateSku());
+    },
+    shoppingNoSpec() {
+      this._triggerShoppingEvent(this.getNoSpecSku());
+    },
+    getNoSpecSku() {
+      return this.properties.spu.sku_list[0];
+    },
+    _triggerShoppingEvent(sku) {
+      this.triggerEvent('shopping', {
+        orderWay: this.properties.orderWay,
+        spuId: this.properties.spu.id,
+        sku,
+        skuCount: this.data.currentSkuCount,
+      });
+    },
+  },
 });
