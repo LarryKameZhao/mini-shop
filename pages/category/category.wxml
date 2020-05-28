@@ -6,7 +6,7 @@
   </view>
   <view class="main">
     <l-segment bind:linchange="onSegChange" l-line-class="l-seg-line" scrollable l-active-class="segment-item-active" l-inactive-class="segment-item" height="{{segHeight}}" width="160" even="{{false}}" placement="left" item-height="90">
-      <block wx:for="{{roots}}" wx:key="{{index}}">
+      <block wx:for="{{roots}}" wx:key="index">
         <l-segment-item key="{{item.id}}" tab="{{item.name}}"></l-segment-item>
       </block>
     </l-segment>

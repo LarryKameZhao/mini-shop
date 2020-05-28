@@ -22,13 +22,13 @@
     <s-sale-explain texts="{{explain}}"></s-sale-explain>
   </view>
   <view class="detail-img-container">
-    <block wx:for="{{spu.spu_detail_img_list}}" wx:key="{{index}}">
+    <block wx:for="{{spu.spu_detail_img_list}}" wx:key="index">
       <image mode="widthFix" class="detail-img" src="{{item.img}}" />
     </block>
   </view>
 </scroll-view>
 <l-popup content-align="bottom" show="{{showRealm}}">
-  <s-realm bind:specchange="onSpecChange" order-way="{{orderWay}}" spu="{{spu}}"></s-realm>
+  <s-realm bind:shopping="onShopping" bind:specchange="onSpecChange" order-way="{{orderWay}}" spu="{{spu}}"></s-realm>
 </l-popup>
 <s-tabbar class="tabbar" bind:gotohome="onGotoHome" bind:gotocart="onGotoCart" bind:addtocart="onAddToCart" bind:buy="onBuy">
   >

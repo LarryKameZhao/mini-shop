@@ -13,7 +13,7 @@
         </view>
       </view>
       <view class="history-tags">
-        <block wx:for="{{historyTags}}" wx:key="{{index}}">
+        <block wx:for="{{historyTags}}" wx:key="index">
           <l-tag bind:lintap="onSearch" l-class="tag" name="{{item}}">{{item}}</l-tag>
         </block>
       </view>

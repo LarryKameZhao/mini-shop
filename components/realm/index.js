@@ -121,12 +121,20 @@ Component({
         outStock: this.isOutOfStock(stock, currentCount),
       });
     },
+    noSpec() {
+      const spu = this.properties.spu;
+      return Spu.isNoSpec(spu);
+    },
     onSelectCount(event) {
       const currentCount = event.detail.count;
       this.data.currentSkuCount = currentCount;
-      if (this.data.judger.isSkuIntact()) {
-        const sku = this.data.judger.getDeterminateSku();
-        this.setStockStatus(sku.stock, currentCount);
+      if (this.noSpec()) {
+        this.setStockStatus(this.getNoSpecSku().stock, currentCount);
+      } else {
+        if (this.data.judger.isSkuIntact()) {
+          const sku = this.data.judger.getDeterminateSku();
+          this.setStockStatus(sku.stock, currentCount);
+        }
       }
     },
     onCellTap(event) {
