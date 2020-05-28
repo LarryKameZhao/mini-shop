@@ -2,6 +2,8 @@ import { Spu } from '../../model/spu';
 import { ShoppingWay } from '../../core/enum';
 import { SaleExplain } from '../../model/sale-explain';
 import { getWidowHeightRpx } from '../../utils/system';
+import { Cart } from '../../components/models/cart';
+import { CartItem } from '../../components/models/cart-item';
 
 // pages/detail/detail.js
 Page({
@@ -12,6 +14,7 @@ Page({
     spu: null,
     showRealm: false,
     specs: null,
+    cartItemCount: 0,
   },
 
   /**
@@ -28,6 +31,7 @@ Page({
       explain,
       h,
     });
+    this.updateCartItemCount();
   },
   onAddToCart(event) {
     this.setData({
@@ -45,9 +49,19 @@ Page({
     console.log(event);
     const chosenSku = event.detail.sku;
     const skuCount = event.detail.skuCount;
-    if(event.detail.orderWay ===ShoppingWay.CART){
-      
+    if (event.detail.orderWay === ShoppingWay.CART) {
+      const cart = new Cart();
+      const cartItem = new CartItem(chosenSku, skuCount);
+      cart.addItem(cartItem);
+      this.updateCartItemCount();
     }
+  },
+  updateCartItemCount() {
+    const cart = new Cart();
+    this.setData({
+      cartItemCount: cart.getCartItemCount(),
+      showRealm: false,
+    });
   },
   onGotoHome(event) {
     wx.switchTab({

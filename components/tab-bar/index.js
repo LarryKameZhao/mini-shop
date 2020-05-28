@@ -3,7 +3,9 @@ Component({
   /**
    * 组件的属性列表
    */
-  properties: {},
+  properties: {
+    cartItemCount: Number,
+  },
 
   /**
    * 组件的初始数据
@@ -15,19 +17,19 @@ Component({
    */
   methods: {
     onGoToHome(event) {
-      this.triggerEvent("gotohome", {});
+      this.triggerEvent('gotohome', {});
     },
 
     onGoToCart(event) {
-      this.triggerEvent("gotocart");
+      this.triggerEvent('gotocart');
     },
 
     onAddToCart(event) {
-      this.triggerEvent("addtocart");
+      this.triggerEvent('addtocart');
     },
 
     onBuy(event) {
-      this.triggerEvent("buy");
-    }
-  }
+      this.triggerEvent('buy');
+    },
+  },
 });

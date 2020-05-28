@@ -33,12 +33,21 @@ Page({
     this.setData({
       cartItems,
     });
+    this.notEmpty();
   },
   empty() {
     this.setData({
       isEmpty: true,
     });
     wx.hideTabBarRedDot({
+      index: 2,
+    });
+  },
+  notEmpty() {
+    this.setData({
+      isEmpty: false,
+    });
+    wx.showTabBarRedDot({
       index: 2,
     });
   },

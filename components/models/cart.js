@@ -11,6 +11,9 @@ class Cart {
     Cart.instance = this;
     return this;
   }
+  getCartItemCount() {
+    return this._getCartData().items.length;
+  }
   getAllCartItemFromLocal() {
     return this._getCartData();
   }
@@ -91,7 +94,7 @@ class Cart {
     return cartData;
   }
   beyondMaxItemCount() {
-    const cartData = this._getCarData();
+    const cartData = this._getCartData();
     return cartData.items.length >= Cart.CART_ITEM_MAX_COUNT;
   }
 }
