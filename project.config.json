@@ -84,6 +84,12 @@
 					"pathName": "pages/search/search",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "cart",
+					"pathName": "pages/cart/cart",
+					"scene": null
 				}
 			]
 		}
