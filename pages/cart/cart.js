@@ -1,4 +1,5 @@
 import { Cart } from '../../components/models/cart';
+import { Caculator } from '../../model/caculator';
 const cart = new Cart();
 
 // pages/cart/cart.js
@@ -10,6 +11,8 @@ Page({
     cartItems: [],
     isEmpty: false,
     allChecked: false,
+    totalPrice: 0,
+    totalSkuCount: 0,
   },
 
   /**
@@ -36,18 +39,39 @@ Page({
     });
     this.notEmpty();
     this.isAllChecked();
+    this.refreshCartData();
   },
   onSingleCheck(evnet) {
     this.isAllChecked();
+    this.refreshCartData();
   },
   onDeleteItem(event) {
     this.isAllChecked();
+    this.refreshCartData();
+  },
+  onCountFloat(event) {
+    this.refreshCartData();
   },
   onCheckAll(event) {
     const checked = event.detail.checked;
     cart.checkAll(checked);
     this.setData({
       cartItems: this.data.cartItems,
+    });
+    this.refreshCartData();
+  },
+  refreshCartData() {
+    const checkedItems = cart.getCheckedItems();
+    const caculator = new Caculator(checkedItems);
+    caculator.calc();
+    this.setCalcData(caculator);
+  },
+  setCalcData(caculator) {
+    const totalPrice = caculator.getTotalPrice();
+    const totalSkuCount = caculator.getTotalSkuCount();
+    this.setData({
+      totalPrice,
+      totalSkuCount,
     });
   },
   isAllChecked() {

@@ -54,6 +54,13 @@ Component({
       });
       this.triggerEvent('itemdelete', { skuId });
     },
+    onSelectCount(event) {
+      let newCount = event.detail.count;
+      console.log(newCount);
+      cart.replaceItemCount(this.properties.cartItem.skuId, newCount);
+      this.triggerEvent('countfloat');
+    },
+
     checkedItem(event) {
       const checked = event.detail.checked;
       cart.checkItem(this.properties.cartItem.skuId);
