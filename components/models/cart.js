@@ -11,11 +11,40 @@ class Cart {
     Cart.instance = this;
     return this;
   }
+  static isSoldOut(item) {
+    return item.sku.stock === 0;
+  }
+  static isOnline(item) {
+    return item.sku.online;
+  }
   getCartItemCount() {
     return this._getCartData().items.length;
   }
   getAllCartItemFromLocal() {
     return this._getCartData();
+  }
+  isAllChecked() {
+    let allChecked = true;
+    const cartItems = this._getCartData().items;
+    for (let item of cartItems) {
+      if (!item.checked) {
+        allChecked = false;
+        break;
+      }
+    }
+    return allChecked;
+  }
+  checkAll(checked) {
+    const cartData = this._getCartData();
+    cartData.items.forEach((item) => {
+      item.checked = checked;
+    });
+    this._refreshStorage();
+  }
+  checkItem(skuId) {
+    const oldItem = this.findEqualItem(skuId);
+    oldItem.checked = !oldItem.checked;
+    this._refreshStorage();
   }
   addItem(newItem) {
     if (this.beyondMaxItemCount()) {

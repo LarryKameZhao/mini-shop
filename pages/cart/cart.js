@@ -1,4 +1,5 @@
 import { Cart } from '../../components/models/cart';
+const cart = new Cart();
 
 // pages/cart/cart.js
 Page({
@@ -8,6 +9,7 @@ Page({
   data: {
     cartItems: [],
     isEmpty: false,
+    allChecked: false,
   },
 
   /**
@@ -24,7 +26,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const cart = new Cart();
     const cartItems = cart.getAllCartItemFromLocal().items;
     if (cart.isEmpty()) {
       this.empty();
@@ -34,6 +35,26 @@ Page({
       cartItems,
     });
     this.notEmpty();
+    this.isAllChecked();
+  },
+  onSingleCheck(evnet) {
+    this.isAllChecked();
+  },
+  onDeleteItem(event) {
+    this.isAllChecked();
+  },
+  onCheckAll(event) {
+    const checked = event.detail.checked;
+    cart.checkAll(checked);
+    this.setData({
+      cartItems: this.data.cartItems,
+    });
+  },
+  isAllChecked() {
+    let allChecked = cart.isAllChecked();
+    this.setData({
+      allChecked,
+    });
   },
   empty() {
     this.setData({
@@ -54,8 +75,7 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
